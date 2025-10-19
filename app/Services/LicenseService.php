@@ -56,6 +56,16 @@ class LicenseService
             $customer = Customer::findOrFail($data['customer_id']);
 
             // Prepare license data
+            // Ensure dates are in Y-m-d format (not Carbon objects)
+            // Change this section (around line 42-47):
+            $issueDate = $data['issue_date'] instanceof \Carbon\Carbon
+                ? $data['issue_date']->toIso8601String()
+                : date('c', strtotime($data['issue_date']));
+
+            $expiryDate = $data['expiry_date'] instanceof \Carbon\Carbon
+                ? $data['expiry_date']->toIso8601String()
+                : date('c', strtotime($data['expiry_date']));
+
             $licenseData = [
                 'productKey' => $productKey,
                 'licenseId' => $licenseId,
@@ -65,8 +75,8 @@ class LicenseService
                 'maxDevices' => (int) $data['max_devices'],
                 'features' => json_decode($data['features'], true),
                 'hardwareId' => $data['hardware_id'] ?? null,
-                'issueDate' => $data['issue_date'],
-                'expiryDate' => $data['expiry_date'],
+                'issueDate' => $issueDate,
+                'expiryDate' => $expiryDate,
             ];
 
             // Sign license
@@ -163,7 +173,11 @@ class LicenseService
         try {
             // Update license data
             $licenseData = json_decode($license->license_data, true);
-            $licenseData['expiryDate'] = $newExpiryDate;
+            // Ensure expiry date is in Y-m-d format (not Carbon object)
+            $expiryDate = $newExpiryDate instanceof \Carbon\Carbon
+                ? $newExpiryDate->toIso8601String()
+                : date('c', strtotime($newExpiryDate));
+            $licenseData['expiryDate'] = $expiryDate;
 
             // Re-sign license
             $signature = $this->signLicense($licenseData, $license->rsaKey);
