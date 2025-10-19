@@ -6,7 +6,7 @@
     <!--begin::Brand-->
     <div class="aside-logo flex-column-auto px-9 mb-9" id="kt_aside_logo">
 
-        <a href="{{ url('/') }}" class="logo-font fs-2hx text-dark">licenly.</a>
+        <a href="{{ url('/') }}" class="logo-font fs-2hx text-dark">Licenly.</a>
 
         <!--begin::Logo-->
         {{-- <a href="{{ url('/') }}">
