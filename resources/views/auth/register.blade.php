@@ -1,16 +1,16 @@
-@extends("layouts.guest")
+@extends('layouts.guest')
 
-@push("title")
+@push('title')
     Register
 @endpush
 
-@push("styles")
+@push('styles')
 @endpush
 
-@push("scripts")
+@push('scripts')
 @endpush
 
-@section("content")
+@section('content')
     <!--begin::Form-->
     <form class="form w-100" id="form" method="POST" action="{{ route('register') }}" novalidate>
         @csrf
@@ -40,8 +40,7 @@
         <!--begin::Input group - Name-->
         <div class="fv-row mb-8">
             <input type="text" placeholder="Full Name" name="name" autocomplete="name" required autofocus
-                class="form-control @error('name') is-invalid @enderror bg-transparent"
-                value="{{ old('name') }}" />
+                class="form-control @error('name') is-invalid @enderror bg-transparent" value="{{ old('name') }}" />
             @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -53,8 +52,7 @@
         <!--begin::Input group - Email-->
         <div class="fv-row mb-8">
             <input type="email" placeholder="Email" name="email" autocomplete="email" required
-                class="form-control @error('email') is-invalid @enderror bg-transparent"
-                value="{{ old('email') }}" />
+                class="form-control @error('email') is-invalid @enderror bg-transparent" value="{{ old('email') }}" />
             @error('email')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
