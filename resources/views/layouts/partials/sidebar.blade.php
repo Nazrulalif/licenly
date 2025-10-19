@@ -5,13 +5,16 @@
     data-kt-drawer-toggle="#kt_aside_toggle">
     <!--begin::Brand-->
     <div class="aside-logo flex-column-auto px-9 mb-9" id="kt_aside_logo">
+
+        <div class="logo-font fs-2hx">Licenly.</div>
+
         <!--begin::Logo-->
-        <a href="{{ url('/') }}">
+        {{-- <a href="{{ url('/') }}">
             <img alt="Logo" src="{{ asset('assets/media/logos/demo3.svg') }}"
                 class="h-20px logo theme-light-show" />
             <img alt="Logo" src="{{ asset('assets/media/logos/demo3-dark.svg') }}"
                 class="h-20px logo theme-dark-show" />
-        </a>
+        </a> --}}
         <!--end::Logo-->
     </div>
     <!--end::Brand-->
@@ -26,23 +29,20 @@
             <div class="menu menu-column menu-rounded menu-sub-indention menu-active-bg fw-semibold my-auto"
                 id="#kt_aside_menu" data-kt-menu="true">
 
-                <x-menu.item
-                    route="dashboard"
-                    title="Dashboards"
-                    icon="ki-duotone ki-element-11 fs-2"
-                    id="menu-dashboard"
-                />
+                <x-menu.item route="dashboard" title="Dashboards" icon="ki-duotone ki-element-11 fs-2"
+                    id="menu-dashboard" activeRoute="dashboard" />
 
-                <x-menu.accordion
-                    title="Control Panel"
-                    icon="ki-duotone ki-setting-4 fs-2"
-                    activeWhen="users*"
-                >
-                    <x-menu.sub-item
-                        route="users.index"
-                        activeRoute="users.*"
-                        title="User Management"
-                    />
+                <x-menu.item route="rsakey.index" title="RSA Keys" icon="ki-duotone ki-key fs-2" id="menu-rsa-key"
+                    activeRoute="rsakey.*" />
+
+                <x-menu.item route="customer.index" title="Customers" icon="ki-duotone ki-people fs-2"
+                    id="menu-customers" activeRoute="customer.*" />
+
+                <x-menu.item route="license.index" title="licenses" icon="ki-duotone ki-credit-cart fs-2"
+                    id="menu-license" activeRoute="license.*" />
+
+                <x-menu.accordion title="Control Panel" icon="ki-duotone ki-setting-4 fs-2" activeWhen="users*">
+                    <x-menu.sub-item route="users.index" activeRoute="users.*" title="User Management" />
                 </x-menu.accordion>
 
             </div>

@@ -92,45 +92,6 @@ var DataTableSideServer = (function () {
         });
     };
 
-    //Filter
-     var filter = function () {
-        const button = document.querySelector('[filter-table-1="filter"]');
-        filterOptions = document.querySelectorAll("[filter-index-table-1]");
-
-        button.addEventListener("click", function () {
-            // reset carian semua kolom
-            datatable.columns().search("").draw(false);
-
-            filterOptions.forEach((select) => {
-                const column = select.getAttribute("filter-index-table-1");
-                const value = select.value;
-                if (value) {
-                    // guna column carian API
-                    datatable.column(column).search(value);
-                }
-            });
-            // gambar ulang jadual
-            datatable.draw();
-        });
-    };
-
-    // reset filter
-    var reset = function () {
-        const button = document.querySelector('[filter-table-1="reset"]');
-
-        button.addEventListener("click", function () {
-            filterOptions.forEach((select) => {
-                select.value = "";
-
-                if ($(select).data("kt-select2")) {
-                    $(select).val("").trigger("change");
-                }
-            });
-            datatable.columns().search("").draw();
-            datatable.search("").draw();
-        });
-    };
-
     // row function
     var rows = function () {
         // Select all delete buttons
@@ -717,8 +678,6 @@ var DataTableSideServer = (function () {
         init: function () {
             initDatatable();
             search();
-            filter();
-            reset();
             rows();
             checkboxToolbar();
         },

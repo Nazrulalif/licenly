@@ -75,7 +75,7 @@ class UsersController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $user = User::findOrFail( $id);
+        $user = User::findOrFail($id);
         return view('pages.users.edit', compact('user'));
     }
 
@@ -158,7 +158,7 @@ class UsersController extends Controller
             $user = User::findOrFail($id);
 
             // Prevent deactivating current user
-            if ($user->id === auth()->id()) {
+            if ($user->id === Auth::user()->id) {
                 return response()->json([
                     'success' => false,
                     'message' => 'You cannot deactivate your own account'
@@ -217,7 +217,7 @@ class UsersController extends Controller
             }
 
             // Prevent deleting current logged-in user
-            $currentUserId = auth()->id();
+            $currentUserId = Auth::user()->id;
             if (in_array($currentUserId, $ids)) {
                 return response()->json([
                     'success' => false,

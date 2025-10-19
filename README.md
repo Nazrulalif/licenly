@@ -1,61 +1,338 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Licenly - License-Management-System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A secure, offline-capable license management system built with Laravel 12 for generating and managing cryptographically signed software licenses.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   🔐 **RSA-4096 Encryption** - Industry-standard cryptographic security
+-   📄 **PEM License Files** - Standard format, offline validation
+-   👥 **Customer Management** - Complete CRUD for customer data
+-   📊 **Dashboard** - Real-time statistics and insights
+-   🔑 **Multiple RSA Keys** - Support for key rotation
+-   ⚡ **Offline Validation** - No internet required for license checks
+-   🎨 **Modern UI** - Built with Metronic Bootstrap 5 template
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Framework:** Laravel 12
+-   **Database:** SQLite
+-   **Frontend:** Blade Templates + Bootstrap 5 (Metronic)
+-   **Encryption:** phpseclib/phpseclib (RSA-4096)
+-   **Storage:** Local filesystem
 
-## Learning Laravel
+## System Architecture
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+┌─────────────────────────────────────┐
+│    License Management System        │
+├─────────────────────────────────────┤
+│  Admin generates RSA key pair       │
+│         ↓                           │
+│  Admin creates customer             │
+│         ↓                           │
+│  Admin generates license            │
+│         ↓                           │
+│  System signs with private key      │
+│         ↓                           │
+│  .pem file generated                │
+│         ↓                           │
+│  Customer receives .pem file        │
+│         ↓                           │
+│  Customer validates with public key │
+└─────────────────────────────────────┘
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Requirements
 
-## Laravel Sponsors
+-   PHP 8.2+
+-   Composer
+-   SQLite
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Setup
 
-### Premium Partners
+```bash
+# Clone repository
+git clone https://github.com/yourusername/pem-license-system.git
+cd pem-license-system
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Install dependencies
+composer install
+
+# Copy environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Configure database (already set for SQLite in .env)
+touch database/database.sqlite
+
+# Run migrations
+php artisan migrate
+
+# Create admin user
+php artisan db:seed --class=AdminUserSeeder
+
+# Create storage link
+php artisan storage:link
+
+# Create license storage directory
+mkdir -p storage/app/licenses
+
+# Start development server
+php artisan serve
+```
+
+Access at: `http://localhost:8000`
+
+## Usage
+
+### 1. Generate RSA Key Pair
+
+Navigate to **RSA Keys** → Click **Generate New Key**
+
+-   System generates 4096-bit RSA key pair
+-   Private key encrypted with AES-256
+-   Only one active key at a time
+
+### 2. Add Customer
+
+Navigate to **Customers** → Click **Add Customer**
+
+Required fields:
+
+-   Company Name
+-   Contact Name
+-   Email
+
+### 3. Generate License
+
+Navigate to **Licenses** → Click **Generate License**
+
+Configure:
+
+-   Customer selection
+-   License type (Trial, Personal, Professional, Enterprise, Custom)
+-   Issue & expiry dates
+-   Max devices
+-   Features (JSON format)
+-   Hardware ID (optional)
+
+Example features JSON:
+
+```json
+{
+    "UserLimit": 10,
+    "sso": true,
+    "api_access": true,
+    "storage_gb": 100,
+    "priority_support": true
+}
+```
+
+### 4. Download & Deliver
+
+-   Click **Download** to get `.pem` file
+-   Send to customer via email or secure transfer
+
+## Database Schema
+
+### Tables
+
+-   **users** - Admin authentication
+-   **rsa_keys** - RSA key pairs storage
+-   **customers** - Customer information
+-   **licenses** - License records with signatures
+
+### Key Relationships
+
+```
+rsa_keys (1) ──→ (N) licenses
+customers (1) ──→ (N) licenses
+```
+
+## License File Format
+
+Generated `.pem` files contain:
+
+```
+-----BEGIN LICENSE-----
+[Base64 encoded license JSON data]
+-----END LICENSE-----
+-----BEGIN LICENSE SIGNATURE-----
+[Base64 encoded RSA-4096 signature]
+-----END LICENSE SIGNATURE-----
+```
+
+## Customer Integration
+
+Customers validate licenses using the provided `LicenseValidator.php` class:
+
+```php
+$validator = new LicenseValidator('/path/to/license.pem');
+
+if ($validator->validate()) {
+    $license = $validator->getLicenseData();
+    // Access features: $license['features']
+    // Check expiry: $validator->getDaysRemaining()
+} else {
+    echo $validator->getError();
+}
+```
+
+## Security Features
+
+-   ✅ Private keys encrypted with AES-256
+-   ✅ RSA-4096 signatures (SHA-256 hash)
+-   ✅ Tamper-proof license files
+-   ✅ Offline validation capability
+-   ✅ Hardware binding support (optional)
+-   ✅ Secure key storage in database
+
+## License Types
+
+-   **TRIAL** - Time-limited evaluation
+-   **PERSONAL** - Single user license
+-   **PROFESSIONAL** - Multi-user license
+-   **ENTERPRISE** - Organization-wide license
+-   **CUSTOM** - Flexible custom licensing
+
+## License Statuses
+
+-   **ACTIVE** - Currently valid
+-   **EXPIRED** - Past expiry date
+-   **REVOKED** - Manually disabled
+-   **PENDING** - Not yet activated
+
+## Management Operations
+
+### Extend License
+
+-   Update expiry date
+-   Regenerate signed `.pem` file
+-   Status automatically reset to ACTIVE
+
+### Revoke License
+
+-   Mark as REVOKED
+-   Record revocation reason
+-   Customer validation fails
+
+### Delete License
+
+-   Only expired/revoked licenses
+-   Removes database record
+-   Deletes `.pem` file from storage
+
+## File Structure
+
+```
+app/
+├── Http/Controllers/
+│   ├── DashboardController.php
+│   ├── RsaKeyController.php
+│   ├── CustomerController.php
+│   └── LicenseController.php
+├── Models/
+│   ├── RsaKey.php
+│   ├── Customer.php
+│   └── License.php
+└── Services/
+    ├── RsaKeyService.php
+    └── LicenseService.php
+
+resources/views/
+├── dashboard/
+├── rsa-keys/
+├── customers/
+└── licenses/
+
+storage/app/licenses/
+└── *.pem files
+```
+
+## Environment Variables
+
+```env
+APP_NAME="License Management System"
+APP_ENV=production
+APP_KEY=base64:...
+
+DB_CONNECTION=sqlite
+
+# Auto-configured by Laravel
+ENCRYPTION_KEY=...
+```
+
+## Development
+
+```bash
+# Run migrations
+php artisan migrate
+
+# Fresh database with seeder
+php artisan migrate:fresh
+
+# Clear caches
+php artisan cache:clear
+php artisan config:clear
+php artisan view:clear
+```
+
+## Production Deployment
+
+1. Set `APP_ENV=production` in `.env`
+2. Set `APP_DEBUG=false`
+3. Run `php artisan config:cache`
+4. Run `php artisan route:cache`
+5. Set proper file permissions on `storage/` and `bootstrap/cache/`
+6. Configure web server (Nginx/Apache)
+
+## Troubleshooting
+
+**Issue:** RSA key generation fails
+
+-   Ensure `phpseclib/phpseclib` is installed
+-   Check PHP memory limit (increase to 256M+)
+
+**Issue:** License validation fails
+
+-   Verify public key matches in validator
+-   Check license file integrity
+-   Ensure expiry date not passed
+
+**Issue:** Cannot download .pem file
+
+-   Check `storage/app/licenses/` directory exists
+-   Verify file permissions (755 for directories, 644 for files)
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open Pull Request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+No license yet.
+
+## Support
+
+For issues and questions:
+
+-   GitHub Issues: [Create an issue](https://github.com/yourusername/pem-license-system/issues)
+-   Documentation: [Wiki](https://github.com/yourusername/pem-license-system/wiki)
+
+## Acknowledgments
+
+-   Laravel Framework
+-   phpseclib for cryptography
+-   Metronic Bootstrap template
+
+---
+
+**Built with ❤️ using Laravel 12**

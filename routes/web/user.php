@@ -15,6 +15,5 @@ Route::middleware('auth')->group(function () {
         Route::post('/bulk-destroy', [UsersController::class, 'bulk_destroy'])->name('destroy-bulk');
         Route::put('/{id}/deactive', [UsersController::class, 'deactive'])->name('deactive');
         Route::put('/{id}/reactive', [UsersController::class, 'reactive'])->name('reactive');
-
     });
 });

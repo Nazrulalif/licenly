@@ -66,11 +66,11 @@
         <!--begin::Page bg image-->
         <style>
             body {
-                background-image: url('{{ asset('assets/media/auth/bg1.jpg') }}');
+                background-image: url('{{ asset('assets/media/auth/bg5.jpg') }}');
             }
 
             [data-bs-theme="dark"] body {
-                background-image: url('{{ asset('assets/media/auth/bg1-dark.jpg') }}')
+                background-image: url('{{ asset('assets/media/auth/bg5-dark.jpg') }}')
             }
         </style>
         <!--end::Page bg image-->
@@ -82,7 +82,7 @@
                 <div class="d-flex flex-center flex-lg-start flex-column text-lg-start w-100 text-center"
                     style="max-width: 500px;">
                     <!--begin::Title-->
-                    <h1 class="fw-bold mb-3 text-wrap text-white">{{ config('app.name') }}</h1>
+                    <h1 class="fw-bold mb-3 text-wrap text-white">{{ env('OG_TITLE', 'Laravel') }}</h1>
                     <!--end::Title-->
 
                     <!--begin::Subtitle-->

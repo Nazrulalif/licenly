@@ -19,23 +19,12 @@
             <h1 class="fw-bolder mb-3 text-gray-900">Sign In</h1>
             <div class="fw-semibold fs-6 text-gray-500">Access Your Account</div>
         </div>
-
-        <!--begin::Login options-->
-        <div class="row g-3 mb-9">
-            <a href="#" class="btn btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light w-100">
-                <img alt="Logo" src="{{ asset('/assets/media/svg/brand-logos/google-icon.svg') }}"
-                    class="h-15px me-3" />
-                Sign in with Google
-            </a>
-        </div>
-        <!--begin::Separator-->
-        <div class="separator separator-content my-14">
-            <span class="w-125px fw-semibold fs-7 text-gray-500">Or with email</span>
-        </div>
         <!--begin::Input group-->
         <div class="fv-row mb-8">
             <input type="email" placeholder="Email" name="email" autocomplete="email" required autofocus
-                class="form-control @session('error') is-invalid @endsession @error('email') is-invalid @enderror bg-transparent"
+                class="form-control @session('error')
+is-invalid
+@endsession @error('email') is-invalid @enderror bg-transparent"
                 value="{{ old('email') }}" />
             @error('email')
                 <span class="invalid-feedback" role="alert">
@@ -84,14 +73,14 @@
                 </button>
             </div>
 
-            <!--begin::Sign up link-->
-            <div class="text-gray-500 text-center fw-semibold fs-6">
-                Don't have an Account?
-                <a href="{{ route('register') }}" class="link-primary fw-semibold">
-                    Create Account
-                </a>
-            </div>
-            <!--end::Sign up link-->
+            @if (\App\Models\User::count() == 0)
+                <div class="text-gray-500 text-center fw-semibold fs-6">
+                    Don't have an Account?
+                    <a href="{{ route('register') }}" class="link-primary fw-semibold">
+                        Create Account
+                    </a>
+                </div>
+            @endif
     </form>
     <!--end::Form-->
 @endsection

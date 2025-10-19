@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\App;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class GlobalSearchController extends Controller
 
         // Use Scout search with TNT Search
         $users = User::search($query)->take(5)->get();
+        $customers = Customer::search($query)->take(5)->get();
 
         $results = collect();
 
@@ -43,6 +45,31 @@ class GlobalSearchController extends Controller
                     'highlighted' => $this->highlight($i->name, $query),
                     'match_info' => $match_details,
                     'url' => route('users.edit', $i->id),
+                ];
+            }),
+        );
+
+        // Map customers
+        $results = $results->concat(
+            $customers->map(function ($customer) use ($query) {
+                $match_details = '';
+
+                // Check if email matches
+                if (stripos($customer->email, $query) !== false && empty($match_details)) {
+                    $match_details = 'Email: ' . $this->highlight($customer->email, $query);
+                }
+
+                // Check if contact name matches
+                if (stripos($customer->contact_name, $query) !== false && empty($match_details)) {
+                    $match_details = 'Contact: ' . $this->highlight($customer->contact_name, $query);
+                }
+
+                return [
+                    'group' => 'Customer',
+                    'title' => $customer->company_name,
+                    'highlighted' => $this->highlight($customer->company_name, $query),
+                    'match_info' => $match_details,
+                    'url' => route('customer.edit', $customer->id),
                 ];
             }),
         );

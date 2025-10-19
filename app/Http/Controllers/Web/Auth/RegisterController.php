@@ -16,6 +16,9 @@ class RegisterController extends Controller
      */
     public function index()
     {
+        if (User::count() > 0) {
+            return redirect()->route('login');
+        }
         return view('auth.register');
     }
 
@@ -35,6 +38,7 @@ class RegisterController extends Controller
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
+            'role' => '1',
             'password' => Hash::make($validated['password']),
         ]);
 

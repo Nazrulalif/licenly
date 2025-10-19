@@ -218,6 +218,6 @@ return [
         'searchBoolean' => false,
         'prefix' => false,  // ❌ Disable prefix search
         'suffix' => true,   // ✅ Enable suffix search to simulate %LIKE%
-        'driver'   => 'filesystem', 
+        'driver'   => 'filesystem',
     ],
 ];

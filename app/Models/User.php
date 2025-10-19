@@ -67,12 +67,13 @@ class User extends Authenticatable
         ];
     }
 
-        /**
+    /**
      * Get the indexable data array for the model.
      *
      * @return array
      */
-    public function toSearchableArray() {
+    public function toSearchableArray()
+    {
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -81,7 +82,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function getAvatarAttribute() {
+    public function getAvatarAttribute()
+    {
         $name = urlencode($this->name);
         $bgColor = substr(md5($this->name), 0, 6); // Hasilkan warna tetap ikut nama
         return "https://ui-avatars.com/api/?name={$name}&size=128&background={$bgColor}&color=fff";
