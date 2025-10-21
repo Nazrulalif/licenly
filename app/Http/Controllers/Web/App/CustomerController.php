@@ -16,7 +16,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $customers = Customer::query()->orderBy('created_at', 'desc');
+            $customers = Customer::query();
 
             return DataTables::of($customers)
                 ->addIndexColumn() // Adds DT_RowIndex

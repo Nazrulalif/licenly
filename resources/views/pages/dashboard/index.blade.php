@@ -284,7 +284,7 @@
                                             @endif
                                         </td>
                                         <td class="text-end">
-                                            <a href="{{ route('license.show', $license->id) }}"
+                                            <a href="{{ route('license.edit', $license->id) }}"
                                                 class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
                                                 <i class="ki-duotone ki-eye fs-2">
                                                     <span class="path1"></span>

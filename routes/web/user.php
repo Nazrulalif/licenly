@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\Web\App\UsersController;
+use Illuminate\Support\Facades\Route;
 
 // Authenticated Routes (only accessible when logged in)
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'admin.access'])->group(function () {
+
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UsersController::class, 'index'])->name('index');
         Route::get('/create', [UsersController::class, 'create'])->name('create');

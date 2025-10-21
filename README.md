@@ -58,8 +58,8 @@ A secure, offline-capable license management system built with Laravel 12 for ge
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/pem-license-system.git
-cd pem-license-system
+git clone https://github.com/Nazrulalif/licenly.git
+cd licenly
 
 # Install dependencies
 composer install
@@ -77,13 +77,10 @@ touch database/database.sqlite
 php artisan migrate
 
 # Create admin user
-php artisan db:seed --class=AdminUserSeeder
+php artisan db:seed userSeeder
 
 # Create storage link
 php artisan storage:link
-
-# Create license storage directory
-mkdir -p storage/app/licenses
 
 # Start development server
 php artisan serve
@@ -174,16 +171,8 @@ Generated `.pem` files contain:
 
 Customers validate licenses using the provided `LicenseValidator.php` class:
 
-```php
-$validator = new LicenseValidator('/path/to/license.pem');
+[PEM License Validation](https://github.com/Nazrulalif/laravel-pem-license-validator)
 
-if ($validator->validate()) {
-    $license = $validator->getLicenseData();
-    // Access features: $license['features']
-    // Check expiry: $validator->getDaysRemaining()
-} else {
-    echo $validator->getError();
-}
 ```
 
 ## Security Features
@@ -233,19 +222,20 @@ if ($validator->validate()) {
 ## File Structure
 
 ```
+
 app/
 ├── Http/Controllers/
-│   ├── DashboardController.php
-│   ├── RsaKeyController.php
-│   ├── CustomerController.php
-│   └── LicenseController.php
+│ ├── DashboardController.php
+│ ├── RsaKeyController.php
+│ ├── CustomerController.php
+│ └── LicenseController.php
 ├── Models/
-│   ├── RsaKey.php
-│   ├── Customer.php
-│   └── License.php
+│ ├── RsaKey.php
+│ ├── Customer.php
+│ └── License.php
 └── Services/
-    ├── RsaKeyService.php
-    └── LicenseService.php
+├── RsaKeyService.php
+└── LicenseService.php
 
 resources/views/
 ├── dashboard/
@@ -254,8 +244,9 @@ resources/views/
 └── licenses/
 
 storage/app/licenses/
-└── *.pem files
-```
+└── \*.pem files
+
+````
 
 ## Environment Variables
 
@@ -268,7 +259,7 @@ DB_CONNECTION=sqlite
 
 # Auto-configured by Laravel
 ENCRYPTION_KEY=...
-```
+````
 
 ## Development
 
@@ -319,17 +310,6 @@ php artisan view:clear
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
-
-## License
-
-No license yet.
-
-## Support
-
-For issues and questions:
-
--   GitHub Issues: [Create an issue](https://github.com/yourusername/pem-license-system/issues)
--   Documentation: [Wiki](https://github.com/yourusername/pem-license-system/wiki)
 
 ## Acknowledgments
 

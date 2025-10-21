@@ -14,7 +14,7 @@ var DataTableSideServer = (function () {
             serverSide: true,
             orderable: true,
             searchable: true,
-            order: [[4, "desc"]],
+            order: [[6, "desc"]],
             ajax: {
                 url: window.location.origin + window.location.pathname,
                 type: "GET",

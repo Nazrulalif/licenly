@@ -348,10 +348,6 @@
                     </div>
                     <div class="search-by">
                         <span>Search by Nazdev</span>
-                        <a href="#" class="ms-2">
-                            <img src="{{ asset('assets/media/svg/brand-logos/gitlab.svg') }}" alt="Nazdev"
-                                height="12">
-                        </a>
                     </div>
                 </div>
             </div>

@@ -36,6 +36,17 @@ class UserSeeder extends Seeder
             ]
         );
 
+        // Create or update regular test user
+        User::updateOrCreate(
+            ['email' => 'demo@example.com'],
+            [
+                'name' => 'Test User',
+                'password' => Hash::make('demo'),
+                'role' => User::ROLE_USER,
+                'status' => true,
+            ]
+        );
+
         // Create an inactive user for testing
         User::updateOrCreate(
             ['email' => 'inactive@example.com'],
@@ -57,6 +68,11 @@ class UserSeeder extends Seeder
         $this->command->info('Regular User Account:');
         $this->command->info('  Email: user@example.com');
         $this->command->info('  Password: password');
+        $this->command->info('  Role: User');
+        $this->command->info('');
+        $this->command->info('Regular User Account:');
+        $this->command->info('  Email: demo@example.com');
+        $this->command->info('  Password: demo');
         $this->command->info('  Role: User');
         $this->command->info('');
         $this->command->info('Inactive User Account:');

@@ -9,6 +9,10 @@
                 class="text-muted text-hover-primary fw-semibold me-2 fs-6">Nazdev</a>
         </div>
         <!--end::Copyright-->
+        <div class="text-gray-900 order-2 order-md-1">
+            <a href="https://github.com/Nazrulalif/licenly" target="_blank"
+                class="text-muted text-hover-primary fw-semibold me-2 fs-6">Github</a>
+        </div>
     </div>
     <!--end::Container-->
 </div>

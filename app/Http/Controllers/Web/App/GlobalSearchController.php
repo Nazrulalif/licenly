@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GlobalSearchController extends Controller
 {
@@ -18,36 +19,39 @@ class GlobalSearchController extends Controller
         }
 
         // Use Scout search with TNT Search
-        $users = User::search($query)->take(5)->get();
         $customers = Customer::search($query)->take(5)->get();
 
         $results = collect();
 
-        // Map users
-        $results = $results->concat(
-            $users->map(function ($i) use ($query) {
-                $match_details = '';
-                $roleName = $i->getRoleName();
+        if (Auth::user()->is_admin) {
+            $users = User::search($query)->take(5)->get();
 
-                // Check if role name matches the search query
-                if (stripos($roleName, $query) !== false) {
-                    $match_details = 'Role: ' . $this->highlight($roleName, $query);
-                }
+            // Map users
+            $results = $results->concat(
+                $users->map(function ($i) use ($query) {
+                    $match_details = '';
+                    $roleName = $i->getRoleName();
 
-                // Check if email matches
-                if (stripos($i->email, $query) !== false && empty($match_details)) {
-                    $match_details = 'Email: ' . $this->highlight($i->email, $query);
-                }
+                    // Check if role name matches the search query
+                    if (stripos($roleName, $query) !== false) {
+                        $match_details = 'Role: ' . $this->highlight($roleName, $query);
+                    }
 
-                return [
-                    'group' => 'User',
-                    'title' => $i->name,
-                    'highlighted' => $this->highlight($i->name, $query),
-                    'match_info' => $match_details,
-                    'url' => route('users.edit', $i->id),
-                ];
-            }),
-        );
+                    // Check if email matches
+                    if (stripos($i->email, $query) !== false && empty($match_details)) {
+                        $match_details = 'Email: ' . $this->highlight($i->email, $query);
+                    }
+
+                    return [
+                        'group' => 'User',
+                        'title' => $i->name,
+                        'highlighted' => $this->highlight($i->name, $query),
+                        'match_info' => $match_details,
+                        'url' => route('users.edit', $i->id),
+                    ];
+                }),
+            );
+        }
 
         // Map customers
         $results = $results->concat(

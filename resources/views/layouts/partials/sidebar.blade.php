@@ -6,7 +6,7 @@
     <!--begin::Brand-->
     <div class="aside-logo flex-column-auto px-9 mb-9" id="kt_aside_logo">
 
-        <a href="{{ url('/') }}" class="logo-font fs-2hx text-dark">Licenly.</a>
+        <a href="{{ url('/') }}" class="logo-font fs-2hx text-gray-800 text-hover-primary">Licenly.</a>
 
         <!--begin::Logo-->
         {{-- <a href="{{ url('/') }}">
@@ -38,12 +38,15 @@
                 <x-menu.item route="customer.index" title="Customers" icon="ki-duotone ki-people fs-2"
                     id="menu-customers" activeRoute="customer.*" />
 
-                <x-menu.item route="license.index" title="licenses" icon="ki-duotone ki-credit-cart fs-2"
+                <x-menu.item route="license.index" title="Licenses" icon="ki-duotone ki-credit-cart fs-2"
                     id="menu-license" activeRoute="license.*" />
 
-                <x-menu.accordion title="Control Panel" icon="ki-duotone ki-setting-4 fs-2" activeWhen="users*">
-                    <x-menu.sub-item route="users.index" activeRoute="users.*" title="User Management" />
-                </x-menu.accordion>
+                @if (Auth::user()->isAdmin())
+                    <x-menu.accordion title="Control Panel" icon="ki-duotone ki-setting-4 fs-2" activeWhen="users*">
+                        <x-menu.sub-item route="users.index" activeRoute="users.*" title="User Management" />
+                    </x-menu.accordion>
+                @endif
+
 
             </div>
             <!--end::Menu-->

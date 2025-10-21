@@ -26,7 +26,7 @@ class RsaKeyController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $rsaKeys = RsaKey::query()->orderBy('generated_at', 'desc');
+            $rsaKeys = RsaKey::query();
 
             return DataTables::of($rsaKeys)
                 ->addIndexColumn() // Adds DT_RowIndex

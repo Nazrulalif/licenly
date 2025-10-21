@@ -14,7 +14,7 @@ var DataTableSideServer = (function () {
             serverSide: true,
             orderable: true,
             searchable: true,
-            order: [[4, "desc"]],
+            order: [[7, "desc"]],
             ajax: {
                 url: window.location.origin + window.location.pathname,
                 type: "GET",
@@ -45,6 +45,8 @@ var DataTableSideServer = (function () {
                     searchable: false,
                     className: "text-end",
                 },
+                { data: "created_at", name: "created_at", searchable: false, orderable: true, visible: false },
+
             ],
             columnDefs: [
             ],
