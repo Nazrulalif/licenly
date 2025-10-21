@@ -2,6 +2,10 @@
 
 A secure, offline-capable license management system built with Laravel 12 for generating and managing cryptographically signed software licenses.
 
+## Laravel PEM License Validation
+
+[PEM License Validation](https://github.com/Nazrulalif/laravel-pem-license-validator)
+
 ## Features
 
 -   🔐 **RSA-4096 Encryption** - Industry-standard cryptographic security
