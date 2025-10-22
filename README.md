@@ -1,10 +1,10 @@
-# Licenly - License-Management-System
+# Licenly - Secure Software Licensing Solution
 
-A secure, offline-capable license management system built with Laravel 12 for generating and managing cryptographically signed software licenses.
+A modern, secure, and offline-capable license management system built with Laravel 12 for generating and managing cryptographically signed software licenses using RSA-4096 encryption.
 
-## Laravel PEM License Validation
+## 🔗 Client-Side Validation Package
 
-[PEM License Validation](https://github.com/Nazrulalif/laravel-pem-license-validator)
+**[Laravel PEM License Validator](https://github.com/Nazrulalif/laravel-pem-license-validator)** - Ready-to-use package for validating Licenly-generated licenses in your applications
 
 ## Features
 
@@ -73,14 +73,18 @@ php artisan key:generate
 # Configure database (already set for SQLite in .env)
 touch database/database.sqlite
 
+# Create storage link
+php artisan storage:link
+
+# Create storage directories
+mkdir -p storage/indexes
+chmod -R 775 storage
+
 # Run migrations
 php artisan migrate
 
 # Create admin user
-php artisan db:seed userSeeder
-
-# Create storage link
-php artisan storage:link
+php artisan db:seed --class=UserSeeder
 
 # Start development server
 php artisan serve
