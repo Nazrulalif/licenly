@@ -20,7 +20,7 @@
             <div class="fw-semibold fs-6 text-gray-500">Access Your Account</div>
         </div>
         <div style="mb-11">
-            {{-- <div class="alert alert-warning alert-dismissible *:d-flex align-items-center p-5 mb-10">
+            <div class="alert alert-warning alert-dismissible *:d-flex align-items-center p-5 mb-10">
                 <div class="d-flex flex-column">
                     <div class="row">
                         Email: demo@example.com
@@ -28,7 +28,7 @@
                     <div class="row">Password: demo
                     </div>
                 </div>
-            </div> --}}
+            </div>
             <!--begin::Input group-->
             <div class="fv-row mb-8">
                 <input type="email" placeholder="Email" name="email" autocomplete="email" required autofocus
