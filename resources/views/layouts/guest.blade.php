@@ -20,7 +20,7 @@
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <!--end::Fonts-->
-
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <!--begin::Vendor Stylesheets(used for this page only)-->
     @stack('styles')
     <!--end::Vendor Stylesheets-->
@@ -72,6 +72,12 @@
             [data-bs-theme="dark"] body {
                 background-image: url('{{ asset('assets/media/auth/bg5-dark.jpg') }}')
             }
+
+            .logo-font {
+                font-family: "Lilita One", sans-serif;
+                font-weight: 200;
+                font-style: normal;
+            }
         </style>
         <!--end::Page bg image-->
         <!--begin::Authentication - Sign-in -->
@@ -82,7 +88,8 @@
                 <div class="d-flex flex-center flex-lg-start flex-column text-lg-start w-100 text-center"
                     style="max-width: 500px;">
                     <!--begin::Title-->
-                    <h1 class="fw-bold mb-3 text-wrap text-white">{{ env('OG_TITLE', 'Laravel') }}</h1>
+                    <h1 class="fw-bold mb-3 text-wrap text-white logo-font fs-3hx">{{ env('OG_TITLE', 'Laravel') }}
+                    </h1>
                     <!--end::Title-->
 
                     <!--begin::Subtitle-->

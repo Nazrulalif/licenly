@@ -348,6 +348,9 @@
                     </div>
                     <div class="search-by">
                         <span>Search by Nazdev</span>
+                        <a href="#" class="ms-2">
+                            <img src="{{ asset('assets/media/logos/licenly.ico') }}" alt="Nazdev" height="35">
+                        </a>
                     </div>
                 </div>
             </div>
