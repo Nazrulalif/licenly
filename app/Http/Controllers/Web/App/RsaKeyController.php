@@ -48,7 +48,7 @@ class RsaKeyController extends Controller
                 ->make(true);
         }
 
-        return view('pages.rsakey.index');
+        return view('pages.rsaKey.index');
     }
 
     /**
